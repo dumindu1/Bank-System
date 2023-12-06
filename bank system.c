@@ -168,3 +168,85 @@ void newacc(void)
             goto invalid;//go to jump if user enters a invlid input(expect 1 or 0)
         }
 }
+
+//..........update the account function definition................
+void update(void)
+{
+    int change,test=0;
+    FILE *old,*newrec;// old = record.dat and newrec = new.dat file pointer
+    old=fopen("file.dat","r");//open a text file in read mode using "r"
+    newrec=fopen("new.dat","w");//open a text file in write mode using "w"
+
+    printf("\nEnter the account no. of the customer whose information you want to change:");
+    scanf("%d",&upd.accno);
+    while(fscanf(old,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.accno,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phoneno,add.acctype,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+    {
+        //if acc.no which is need to update is equal to the acc.no which is user input
+        if (add.accno==upd.accno)
+        {   
+            test=1;
+            printf("\nWhich information do you want to change?\n1.Address\n2.Phone\n\nEnter your choice(1 for address and 2 for phone):");
+            scanf("%d",&change);
+            system("cls");
+
+            //if user need to change the address(user input the 1)
+            if(change==1)
+                {
+                printf("Enter the new hometown:");
+                scanf("%s",upd.address);
+                fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,upd.address,add.citizenship,add.phoneno,add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+                system("cls");
+                printf("Changes saved!");
+                }
+            //if user need to change the name(user input the 2)
+            else if(change==2)
+                {
+                printf("Enter the new phone number:");
+                scanf("%lf",&upd.phoneno);
+                fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,upd.phoneno,add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+                system("cls");
+                printf("Changes saved!");
+                }
+
+        }
+        else
+        // writing a block of data to a file
+            fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phoneno,add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+    }
+    fclose(old);
+    fclose(newrec);
+    remove("file.dat");//remove the previous acc
+    rename("new.dat","file.dat");//rename the new acc as "record.dat"
+
+if(test!=1)//if the  user input the invalid acc.no
+        {  
+             system("cls");
+            printf("\nRecord not found!!\a\a\a");
+            enter://label
+              printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
+              scanf("%d",&main_exit);
+              system("cls");
+                 if (main_exit==0)
+                    update();
+                else if (main_exit==1)
+                    mainmenu();
+                else if(main_exit==2)
+                    close();
+                else
+                    {
+                    printf("\nInvalid Entered!\a");
+                    goto enter;//go to jump if the user enter a invalid input
+                    }
+        }
+    else
+    //if user need go to the main menu or exit  
+        {
+        printf("\n\n\nEnter 1 to go to the main menu and 0 to exit:");
+        scanf("%d",&main_exit);
+        system("cls");
+        if (main_exit==1)
+            mainmenu();
+        else
+            close();
+        }
+}

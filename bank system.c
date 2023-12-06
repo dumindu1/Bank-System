@@ -93,3 +93,78 @@ struct{
 
         return 0;//function will return null function
 }//end the  main function
+
+//.........interest function definition...........
+float interest(float t,float amount,int rate)
+{
+    float SI;//local varibal declaration
+    SI=(rate*t*amount)/100.0;
+    return (SI);
+}
+
+//...........create the new account function definition...............
+void newacc(void)
+
+{
+   
+    FILE *ptr;//local variable declaration(ptr= record.dat file pointer)
+
+    ptr=fopen("file.dat","a+");//open a text file in apend mode using "a+"
+
+
+    acc_no://label
+    system("cls");
+    printf("\t\t\t.....ADD RECORD.....");
+    printf("\n\n\nEnter today's date(mm/dd/yyyy):");
+    scanf("%d/%d/%d",&add.deposit.month,&add.deposit.day,&add.deposit.year);
+    printf("\nEnter the account number:");//get the account number from the user
+    scanf("%d",&check.accno);
+    //read and separate data frome the file
+    while(fscanf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",&add.accno,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phoneno,add.acctype,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+    {
+        if (check.accno==add.accno)
+            {
+                printf("Account no. already in use!");
+          
+                goto acc_no;//go to jump if the user enter a accoun no, already in use
+             }
+         }
+    add.accno=check.accno;//asign the user input(new acc no) to add.accno 
+    //get the details from user for creat the new account
+    printf("\nEnter the name with initials:");
+    scanf("%s",add.name);
+    printf("\nEnter the date of birth(mm/dd/yyyy):");
+    scanf("%d/%d/%d",&add.dob.month,&add.dob.day,&add.dob.year);
+    printf("\nEnter the age:");
+    scanf("%d",&add.age);
+    printf("\nEnter the hometown:");
+    scanf("%s",add.address);
+    printf("\nEnter the NIC:");
+    scanf("%s",add.citizenship);
+    printf("\nEnter the phone number: ");
+    scanf("%lf",&add.phoneno);
+    printf("\nEnter the amount to deposit:Rs.");
+    scanf("%f",&add.amt);
+    printf("\nType of account:\n\n\t\tSaving\n\t\tCurrent\n\t\tFixed1(for 1 year)\n\t\tFixed2(for 2 years)\n\t\tFixed3(for 3 years)\n\n\tEnter your choice:");
+    scanf("%s",add.acctype);
+       // writing a block of data to a file
+    fprintf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phoneno,add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+     fclose(ptr);//close the file
+
+    printf("\n........Account has been created successfully!...........");
+
+    invalid://label
+    printf("\n\n\nEnter 1 to go to the main menu and 0 to exit:");
+    scanf("%d",&main_exit);
+     system("cls");
+
+    if (main_exit==1)
+        mainmenu();// call the main menu function
+    else if(main_exit==0)
+        close();//call the close function
+    else
+        {
+            printf("\nInvalid Enered! \a");
+            goto invalid;//go to jump if user enters a invlid input(expect 1 or 0)
+        }
+}

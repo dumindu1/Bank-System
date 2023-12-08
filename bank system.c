@@ -621,3 +621,12 @@ void mainmenu(void)
 
 }
 
+//..............close function definition................
+void close(void)
+{
+   
+    printf("\n\n\n\n\t........Thank you......\n\n");
+  
+  
+    }
+//

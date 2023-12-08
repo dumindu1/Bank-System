@@ -350,3 +350,179 @@ void transact(void)
    }
 
 }
+
+//............check the balance function definition....................
+void checkb(void)
+{
+    FILE *ptr;
+    //declare the local varibles
+    int test=0,rate,choice;
+    float time,intrst;
+  
+    ptr=fopen("file.dat","r");
+     //get the choice from user (from 1.acc.no or 2.name)
+    printf("\n\nDo you want to check by\n\n\t1.Account no\n\t2.Name\n\nEnter your choice:");
+    scanf("%d",&choice);
+    //if user choose the 1
+    if (choice==1)
+      //check the detailes from the acc.no
+    {   printf("\n\nEnter the account number:");
+        scanf("%d",&check.accno);
+
+        while (fscanf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.accno,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phoneno,add.acctype,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+        {
+            if(add.accno==check.accno)
+            {   system("cls");
+                test=1;
+
+                  //print the detailes of acc
+                  printf("\n\tAccount NO:%d\n",add.accno);
+                  printf("\tName:%s\n",add.name);
+                  printf("\tDOB:%d/%d/%d\n",add.dob.month,add.dob.day,add.dob.year );
+                  printf("\tAge:%d\n",add.age );
+                  printf("\tHometown:%s\n",add.address );
+                  printf("\tNIC:%s\n",add.citizenship );
+                  printf("\tPhone number:%.0lf\n",add.phoneno );
+                  printf("\tType Of Account:%s\n",add.acctype );
+                  printf("\tAmount deposited: Rs. %.2f\n",add.amt );
+                  printf("\tDate Of Deposit:%d/%d/%d\n" ,add.deposit.month,add.deposit.day,add.deposit.year);
+              
+                if(strcmpi(add.acctype,"fixed1")==0)//if acc.type is fixed1
+                    {
+                        time=1.0;
+                        rate=9;
+                        intrst=interest(time,add.amt,rate);
+                        printf("\n\n\tYou will get $%.2f as interest on %d/%d/%d\n\n",intrst,add.deposit.month,add.deposit.day,add.deposit.year+1);
+                    }
+                else if(strcmpi(add.acctype,"fixed2")==0)//if acc type is fixed2
+                    {
+                        time=2.0;
+                        rate=11;
+                        intrst=interest(time,add.amt,rate);
+                        printf("\n\n\tYou will get $.%.2f as interest on %d/%d/%d\n\n",intrst,add.deposit.month,add.deposit.day,add.deposit.year+2);
+
+                    }
+                else if(strcmpi(add.acctype,"fixed3")==0)//if acc type is fixed3
+                    {
+                        time=3.0;
+                        rate=13;
+                        intrst=interest(time,add.amt,rate);
+                        printf("\n\n\tYou will get $.%.2f as interest on %d/%d/%d\n\n",intrst,add.deposit.month,add.deposit.day,add.deposit.year+3);
+
+                    }
+                 else if(strcmpi(add.acctype,"saving")==0)//if the acc.type is saving 
+                    {
+                        time=(1.0/12.0);
+                        rate=8;
+                        intrst=interest(time,add.amt,rate);
+                        printf("\n\n\tYou will get $.%.2f as interest on %d of every month\n\n",intrst,add.deposit.day);
+
+                     }
+                 else if(strcmpi(add.acctype,"current")==0)//if the acc.type is current
+                    {
+
+                        printf("\n\n\tYou will get no interest\n\n\a\a");
+
+                     }
+
+            }
+        }
+    }
+      //if user enter the 2
+    else if (choice==2)
+     //check the detials of acc from the account name 
+    {   printf("\nEnter the name:");
+        scanf("%s",&check.name);
+        while (fscanf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.accno,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phoneno,add.acctype,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+        {
+            if(strcmpi(add.name,check.name)==0)
+            {   system("cls");
+                test=1;
+                printf("\nAccount No.:%d\nName:%s \nDOB:%d/%d/%d \nAge:%d \nAddress:%s \nCitizenship No:%s \nPhone number:%.0lf \nType Of Account:%s \nAmount deposited:$%.2f \nDate Of Deposit:%d/%d/%d\n\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phoneno,
+                add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+                if(strcmpi(add.acctype,"fixed1")==0)//if acc type is fixed1
+                    {
+                        time=1.0;
+                        rate=9;
+                        intrst=interest(time,add.amt,rate);
+                        printf("\n\nYou will get $.%.2f as interest on %d/%d/%d\n\n",intrst,add.deposit.month,add.deposit.day,add.deposit.year+1);
+                    }
+                else if(strcmpi(add.acctype,"fixed2")==0)//if acc type is fixed2
+                    {
+                        time=2.0;
+                        rate=11;
+                        intrst=interest(time,add.amt,rate);
+                        printf("\n\nYou will get $.%.2f as interest on %d/%d/%d\n\n",intrst,add.deposit.month,add.deposit.day,add.deposit.year+2);
+
+                    }
+                else if(strcmpi(add.acctype,"fixed3")==0)//if acc type is fixed3
+                    {
+                        time=3.0;
+                        rate=13;
+                        intrst=interest(time,add.amt,rate);
+                        printf("\n\nYou will get $.%.2f as interest on %d/%d/%d\n\n",intrst,add.deposit.month,add.deposit.day,add.deposit.year+3);
+
+                    }
+                 else if(strcmpi(add.acctype,"saving")==0)//if the acc.type is saving 
+                    {
+                        time=(1.0/12.0);
+                        rate=8;
+                        intrst=interest(time,add.amt,rate);
+                        printf("\n\nYou will get $.%.2f as interest on %d of every month\n\n",intrst,add.deposit.day);
+
+                     }
+                 else if(strcmpi(add.acctype,"current")==0)//if the acc.type is current
+                    {
+
+                        printf("\n\nYou will get no interest\n\n\a\a");
+
+                     }
+
+            }
+        }
+    }
+
+
+    fclose(ptr);//file close
+     if(test!=1)
+        {   system("cls");
+            printf("\nRecord not found!!\a\a\a");
+            check://label
+              printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
+              scanf("%d",&main_exit);
+              system("cls");
+              //if user input the 1
+                 if (main_exit==1)
+                    mainmenu();//call the mainmenu function
+                else if (main_exit==2)
+                    close();
+              //if user input the 0
+                else if(main_exit==0)
+                    checkb();//call the checkb function
+              //if user input the expect of 1 or 0
+                else
+                    {
+                        system("cls");
+                        printf("\nInvalid!\a");
+                        goto check;//go to jump if the user enter a invalid input
+                    }
+        }
+    else
+        {
+         printf("\nEnter 1 to go to the main menu and 0 to exit:");
+        scanf("%d",&main_exit);
+        }
+        if (main_exit==1)//if user enter the 1
+        {
+            system("cls");
+            mainmenu();//call the mainmenu function
+        }
+
+        else//if user enter the 0
+           {
+
+            system("cls");
+            close();//call the close function
+            }
+
+}

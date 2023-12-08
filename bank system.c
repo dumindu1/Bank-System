@@ -583,3 +583,41 @@ void delete(void)
         }
 
 }
+
+//................mainmenu function definition..............
+void mainmenu(void)
+
+{   
+    int choice;//declaration of variable which will use inside the switch case
+    
+    printf("\n\n\t========= BANKING MANAGEMENT SYSTEM =========");
+    printf("\n\n\t\t WELCOME TO THE MAIN MENU ");
+    //Main Menu options
+    printf("\n\n\t\t[1] Create a new account");
+    printf("\n\t\t[2] Update information of existing account");
+    printf("\n\t\t[3] Transactions");
+    printf("\n\t\t[4] Check the balance of account");
+    printf("\n\t\t[5] Remove existing account");
+    printf("\n\t\t[6] Exit");
+    printf("\n\n\n\t\tEnter your choice:");
+    scanf("%d",&choice); //get the choice from the user
+
+    
+    switch(choice)
+    {
+        case 1:newacc(); //call for the newacc function
+        break;
+        case 2:update(); //call for the update functon
+        break;
+        case 3:transact(); //call for the transact functon
+        break;
+        case 4:checkb(); //call for the checkb functon
+        break;
+        case 5:delete(); //call for the delete functon
+        break;
+        case 6:close(); //call for close functon
+        break;
+    }
+
+}
+

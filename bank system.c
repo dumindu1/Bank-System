@@ -526,3 +526,60 @@ void checkb(void)
             }
 
 }
+
+// .........delete the account function definition...........
+void delete(void)
+{
+    
+    FILE *old,*newrec;
+    int test=0;
+    old=fopen("file.dat","r");//open a text file in read mode using "r"
+    newrec=fopen("new.dat","w");//open a text file in write mode using "w"
+  
+    printf("\n\nEnter the account no. of the customer you want to delete:");
+    scanf("%d",&rem.accno);
+    while (fscanf(old,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.accno,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phoneno,add.acctype,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+   {
+       
+        if(add.accno!=rem.accno)
+            fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phoneno,add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+
+        else
+            {test++;//test=test+1
+            printf("\nRecord deleted successfully!\n");
+            }
+   }
+   fclose(old);//close the record.dat file 
+   fclose(newrec);//close the new.dat file
+   remove("file.dat");//remove the record.dat file
+   rename("new.dat","file.dat");//rename the "new.dat"  to "record.dat"
+  
+   if(test==0)
+        {
+            printf("\nRecord not found!!\a\a\a");
+            delete://label
+              printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
+              scanf("%d",&main_exit);
+
+                 if (main_exit==0)
+                     delete();
+                else if (main_exit==1)
+                    mainmenu();
+                else if(main_exit==2)
+                    close();
+                else
+                    {printf("\nInvalid Entered!\a");
+                    goto delete;//go to jump if the user enter a invalid input
+                    }
+        }
+    else
+        {printf("\nEnter 1 to go to the main menu and 0 to exit:");
+        scanf("%d",&main_exit);
+        system("cls");
+        if (main_exit==1)
+            mainmenu();
+        else
+            close();
+        }
+
+}

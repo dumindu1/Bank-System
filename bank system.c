@@ -250,3 +250,103 @@ if(test!=1)//if the  user input the invalid acc.no
             close();
         }
 }
+
+//...........transaction function definition................
+void transact(void)
+{   int choice,test=0;
+
+    FILE *old,*newrec;//file pointer declaration
+    old=fopen("file.dat","r");//open a text file in read mode using "r"
+    newrec=fopen("new.dat","w");//open a text file in write mode using "w"
+
+
+    printf("\n\nEnter the account no. of the customer:");
+    scanf("%d",&transaction.accno);
+    while (fscanf(old,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.accno,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phoneno,add.acctype,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+   {
+
+            if(add.accno==transaction.accno)//if check acc.no which is the user input equal to acc.no which is need to transaction  
+            {   test=1;//if add.accno equal to transaction,accno ,test=1
+
+            //if this function return the 0,acc.type is same to fixed1 or fixed2 or fixed3  
+                if(strcmpi(add.acctype,"fixed1")==0||strcmpi(add.acctype,"fixed2")==0||strcmpi(add.acctype,"fixed3")==0)
+                {
+                    printf("\a\a\a\n\nYOU CANNOT DEPOSIT OR WITHDRAW CASH IN FIXED ACCOUNTS!!!!!");
+                
+                    system("cls");
+                    mainmenu();// call the mainmenu function
+
+                }
+                printf("\n\nDo you want to\n\n1.Deposit\n2.Withdraw?\n\nEnter your choice(1 for deposit and 2 for withdraw):");
+                scanf("%d",&choice);
+                //if user enter the choice as 1(for deposit)
+                if (choice==1)
+                {
+                    printf("\n\nEnter the amount you want to deposit:Rs. ");
+                    scanf("%f",&transaction.amt);
+                    add.amt+=transaction.amt;//add.amt=add.amt+transaction.amt
+                    fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phoneno,add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+                    printf("\n\n.........Deposited successfully!........\n\n");
+                }
+                else
+                //if user enter the choice as 2(for withdrawn)
+                {
+                    printf("\n\nEnter the amount you want to withdraw:Rs. ");
+                    scanf("%f",&transaction.amt);
+                    add.amt-=transaction.amt;//add.amt=add.amt-transaction.amt
+                    fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phoneno,add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+                    printf("\n\n.......Withdrawn successfully........!\n\n");
+                }
+
+            }
+            else
+            {
+               fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.accno,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phoneno,add.acctype,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+            }
+   }
+   fclose(old);//close the record.dat file
+   fclose(newrec);//close the new.dat file
+   remove("file.dat");//remove the previous acc
+   rename("new.dat","file.dat");//rename the new acc as "record.dat"
+
+//tesl not equal to 1= no mathcing the acc no which is user input 
+   if(test!=1)
+   {
+       printf("\n\nRecord not found!!");
+       transact://label
+      printf("\n\n\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
+      scanf("%d",&main_exit);
+      system("cls");
+
+      //if user enter the 0
+      if (main_exit==0)
+        transact();//call the transact function
+
+        //if user enter the 1
+    else if (main_exit==1)
+        mainmenu();//call the mainmenu function
+
+        //if user enter the 2
+    else if (main_exit==2)
+        close();//call the close function
+    else
+    {
+        printf("\nInvalid Entered!");
+        goto transact;//go to jump if the user enter a invalid input
+    }
+
+   }
+
+   else
+   {
+       printf("\nEnter 1 to go to the main menu and 0 to exit:");
+        scanf("%d",&main_exit);
+        system("cls");
+        //if user need to go to mainmenu(enter the 1)
+        if (main_exit==1)
+            mainmenu();
+        else
+            close();
+   }
+
+}
